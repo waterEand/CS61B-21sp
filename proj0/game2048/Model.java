@@ -5,7 +5,7 @@ import java.util.Observable;
 
 
 /** The state of a game of 2048.
- *  @author TODO: YOUR NAME HERE
+ *  @author Qiyuan Zhuang
  */
 public class Model extends Observable {
     /** Current contents of the board. */
@@ -114,6 +114,72 @@ public class Model extends Observable {
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
 
+        board.setViewingPerspective(side);
+
+        for (int col = 0; col < board.size(); col += 1) {
+            int[] column = new int[board.size()];
+            for (int row = 0; row < board.size(); row += 1) {
+                if (board.tile(col, row) != null) {
+                    column[row] = board.tile(col, row).value();
+                }
+            }
+            int i = board.size()-1;
+            while (i > 0) {
+                if (column[i] == 0) {
+                    for (int m = i; m >= 0; m -= 1) {
+                        if (column[m] != 0) {
+                            board.move(col, i, board.tile(col, m));
+                            column[i] = column[m];
+                            column[m] = 0;
+                            changed = true;
+                            break;
+                        }
+                    }
+                }
+                i -= 1;
+            }
+
+            i = board.size()-1;
+            while (i > 0) {
+                int j = i-1;
+                if (column[i] == 0) {
+                    int p = i;
+                    while (p > 0) {
+                        if (column[p] == 0) {
+                            for (int m = p; m >= 0; m -= 1) {
+                                if (column[m] != 0) {
+                                    board.move(col, p, board.tile(col, m));
+                                    column[p] = column[m];
+                                    column[m] = 0;
+                                    changed = true;
+                                    break;
+                                }
+                            }
+                            if (column[p] == 0) {
+                                break;
+                            }
+                        }
+                        p -= 1;
+                    }
+                    if (column[i] == 0) break;
+                    continue;
+                }
+                if (column[j] != 0 && column[i] != column[j]) {
+                    i -= 1;
+                    continue;
+                }
+                if (column[i] == column[j] && column[i] != 0) {
+                    Tile t = board.tile(col, j);
+                    board.move(col, i, t);
+                    changed = true;
+                    column[i] = column[i]*2;
+                    column[j] = 0;
+                    score += column[i];
+                }
+                i -= 1;
+            }
+        }
+        board.setViewingPerspective(Side.NORTH);
         checkGameOver();
         if (changed) {
             setChanged();
@@ -138,6 +204,13 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        for (int col = 0; col < b.size(); col += 1) {
+            for (int row = 0; row < b.size(); row += 1) {
+                if (b.tile(col, row) == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -148,6 +221,14 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        for (int col = 0; col < b.size(); col += 1) {
+            for (int row = 0; row < b.size(); row += 1) {
+                Tile t = b.tile(col, row);
+                if (t != null && t.value() == MAX_PIECE) {
+                        return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +240,22 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        if (emptySpaceExists(b)) return true;
+        /** check the first 3*3 matrix */
+        for (int col = 0; col < b.size() - 1; col += 1) {
+            for (int row = 0; row < b.size() - 1; row += 1) {
+                if ((b.tile(col, row).value() == b.tile(col, row+1).value()) || (b.tile(col, row).value() == b.tile(col+1, row).value())) {
+                    return true;
+                }
+            }
+        }
+        /** check the part of margin */
+        for (int row = 0; row < b.size() - 1; row += 1) {
+            if (b.tile(b.size()-1, row).value() == b.tile(b.size()-1, row+1).value()) return true;
+        }
+        for (int col = 0; col < b.size() - 1; col += 1) {
+            if (b.tile(col, b.size()-1).value() == b.tile(col+1, b.size()-1).value()) return true;
+        }
         return false;
     }
 
