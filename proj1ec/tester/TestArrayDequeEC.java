@@ -21,8 +21,8 @@ public class TestArrayDequeEC {
             corarr.addFirst(num1);
             errarr.addFirst(num2);
             corarr.addFirst(num2);
-            assertEquals("addLast(" + num1 + ")\naddLast(" + num2 + ")\nget(" + 0 + ")", errarr.get(0), corarr.get(0));
-            assertEquals("addLast(" + num1 + ")\naddLast(" + num2 + ")\nget(" + 1 + ")", errarr.get(1), corarr.get(1));
+            assertEquals("addLast(" + num1 + ")\naddLast(" + num2 + ")\nget(" + 0 + ")", corarr.get(0), errarr.get(0));
+            assertEquals("addLast(" + num1 + ")\naddLast(" + num2 + ")\nget(" + 1 + ")", corarr.get(1), errarr.get(1));
             i += 2;
         }
     }
@@ -41,8 +41,8 @@ public class TestArrayDequeEC {
             errarr.addLast(num2);
             corarr.addLast(num2);
 
-            assertEquals("addLast(" + num1 + ")\naddLast(" + num2 + ")\nget(" + i + ")", errarr.get(errarr.size()-1), corarr.get(corarr.size()-1));
-            assertEquals("addLast(" + num1 + ")\naddLast(" + num2 + ")\nget(" + (i+1) + ")", errarr.get(errarr.size()-2), corarr.get(corarr.size()-2));
+            assertEquals("addLast(" + num1 + ")\naddLast(" + num2 + ")\nget(" + i + ")", corarr.get(corarr.size()-1), errarr.get(errarr.size()-1));
+            assertEquals("addLast(" + num1 + ")\naddLast(" + num2 + ")\nget(" + (i+1) + ")", corarr.get(corarr.size()-2), errarr.get(errarr.size()-2));
             i += 1;
         }
     }
@@ -60,9 +60,9 @@ public class TestArrayDequeEC {
             errarr.addFirst(num2);
             corarr.addFirst(num2);
 
-            assertEquals("addFirst(" + num1 + ")\naddFirst(" + num2 + ")\nremoveFirst()",errarr.removeFirst(), corarr.removeFirst());
-            assertEquals("addLast(" + num1 + ")\naddLast(" + num2 + ")\nremoveFirst()\nget(" + 0 + ")", errarr.get(0), corarr.get(0));
-            assertEquals("addFirst(" + num1 + ")\naddFirst(" + num2 + ")\nremoveFirst()\nget(" + (errarr.size()-1) + ")", errarr.get(errarr.size()-1), corarr.get(corarr.size()-1));
+            assertEquals("addFirst(" + num1 + ")\naddFirst(" + num2 + ")\nremoveFirst()", corarr.removeFirst(), errarr.removeFirst());
+            assertEquals("addLast(" + num1 + ")\naddLast(" + num2 + ")\nremoveFirst()\nget(" + 0 + ")", corarr.get(0), errarr.get(0));
+            assertEquals("addFirst(" + num1 + ")\naddFirst(" + num2 + ")\nremoveFirst()\nget(" + (errarr.size()-1) + ")", corarr.get(corarr.size()-1), errarr.get(errarr.size()-1));
         }
     }
 
@@ -79,8 +79,8 @@ public class TestArrayDequeEC {
             errarr.addLast(num2);
             corarr.addLast(num2);
             //assertEquals(errarr.get(errarr.size()-2), corarr.get(corarr.size()-2));
-            assertEquals("addLast(" + num1 + ")\naddLast(" + num2 + ")\nremoveLast()", errarr.removeLast(), corarr.removeLast());
-            assertEquals("addLast(" + num1 + ")\naddLast(" + num2 + ")\nremoveLast()\nget(" + (errarr.size()-1) + ")", errarr.get(errarr.size()-1), corarr.get(corarr.size()-1));
+            assertEquals("addLast(" + num1 + ")\naddLast(" + num2 + ")\nremoveLast()", corarr.removeLast(), errarr.removeLast());
+            assertEquals("addLast(" + num1 + ")\naddLast(" + num2 + ")\nremoveLast()\nget(" + (errarr.size()-1) + ")", corarr.get(corarr.size()-1), errarr.get(errarr.size()-1));
         }
     }
 }
