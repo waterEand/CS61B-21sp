@@ -65,10 +65,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         size += 1;
     }
 
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
     public int size() {
         return size;
     }
@@ -135,7 +131,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private class ArrayIterator implements Iterator<T> {
         private int wizpos;
 
-        public ArrayIterator() {
+        private ArrayIterator() {
             wizpos = 0;
         }
 
@@ -151,19 +147,21 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     public boolean equals(Object other) {
-        if (this == other)
+        if (this == other) {
             return true;
-        if (other == null || !(other instanceof Deque))
-            return false;
-
-        Deque<T> temp = (Deque<T>) other;
-        if (this.size() != temp.size())
-            return false;
-        for (int i = 0; i < this.size(); i += 1) {
-            if (this.get(i) != temp.get(i))
-                return false;
         }
-
+        if (other == null || !(other instanceof Deque)) {
+            return false;
+        }
+        Deque<T> temp = (Deque<T>) other;
+        if (this.size() != temp.size()) {
+            return false;
+        }
+        for (int i = 0; i < this.size(); i += 1) {
+            if (!(temp.get(i).equals(this.get(i)))) {
+                return false;
+            }
+        }
         return true;
     }
 

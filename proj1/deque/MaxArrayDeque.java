@@ -1,6 +1,6 @@
 package deque;
 
-import net.sf.saxon.functions.Compare;
+//import net.sf.saxon.functions.Compare;
 
 import java.util.Comparator;
 
@@ -13,8 +13,9 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
     }
 
     public T max() {
-        if (isEmpty())
+        if (isEmpty()) {
             return null;
+        }
         T maxItem = this.get(0);
         for (T i : this) {
             if (comp.compare(i, maxItem) > 0) {
@@ -25,8 +26,9 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
     }
 
     public T max(Comparator<T> c) {
-        if (isEmpty())
+        if (isEmpty()) {
             return null;
+        }
         T maxItem = this.get(0);
         for (T i : this) {
             if (c.compare(i, maxItem) > 0) {

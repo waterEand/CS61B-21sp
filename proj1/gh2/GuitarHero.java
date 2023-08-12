@@ -17,10 +17,11 @@ public class GuitarHero {
             /* check if the user has typed a key; if so, process it */
             if (StdDraw.hasNextKeyTyped()) {
                 char key = StdDraw.nextKeyTyped();
-                int index_key = keyboard.indexOf(key);
-                if (strboard.get(index_key) == null)
+                int ind = keyboard.indexOf(key);
+                if (strboard.get(ind) == null) {
                     continue;
-                strboard.get(index_key).pluck();
+                }
+                strboard.get(ind).pluck();
             }
 
             /* compute the superposition of samples */
